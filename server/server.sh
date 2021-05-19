@@ -16,26 +16,17 @@ tc filter add dev ifb0 protocol ip parent 1:0 prio 1 u32 match ip src 88.88.3.0/
 
 
 tc qdisc add dev eth0 root handle 1: htb default 11
-tc class add dev eth0 parent 1:0 classid 1:1 htb rate 100mbit prio 1
-
-tc class add dev eth0 parent 1:1 classid 1:11 htb rate 5mbit ceil 40mbit prio 1
-
-tc class add dev eth0 parent 1:1 classid 1:12 htb rate 5mbit ceil 20mbit prio 1
-tc class add dev eth0 parent 1:1 classid 1:121 htb rate 5mbit ceil 20mbit prio 2
-
-tc class add dev eth0 parent 1:1 classid 1:13 htb rate 5mbit ceil 20mbit prio 1
-
-tc class add dev eth0 parent 1:1 classid 1:14 htb rate 5mbit ceil 20mbit prio 1
-
+tc class add dev eth0 parent 1:0 classid 1:1 htb rate 100mbit
+tc class add dev eth0 parent 1:1 classid 1:11 htb rate 1mbit ceil 40mbit
+tc class add dev eth0 parent 1:1 classid 1:12 htb rate 1mbit ceil 20mbit
+tc class add dev eth0 parent 1:1 classid 1:13 htb rate 1mbit ceil 20mbit
+tc class add dev eth0 parent 1:1 classid 1:14 htb rate 1mbit ceil 20mbit
 
 
 tc filter add dev eth0 parent 1:0 protocol ip prio 1 u32 match ip dst 88.88.1.0/24 flowid 1:11
-
-tc filter add dev eth0 parent 1:0 protocol ip prio 2 u32 match ip dst 88.88.2.0/24 match ip protocol 17 0xff flowid 1:121
+tc filter add dev eth0 parent 1:0 protocol ip prio 2 u32 match ip dst 88.88.2.0/24 match ip protocol 17 0xff flowid 1:12
 tc filter add dev eth0 parent 1:0 protocol ip prio 1 u32 match ip dst 88.88.2.0/24 flowid 1:12
-
 tc filter add dev eth0 parent 1:0 protocol ip prio 1 u32 match ip dst 88.88.3.0/24 flowid 1:13
-
 tc filter add dev eth0 parent 1:0 protocol ip prio 1 u32 match ip dst 88.88.4.0/24 flowid 1:14
 
 service ssh start
