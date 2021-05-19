@@ -23,11 +23,11 @@ tc class add dev eth0 parent 1:1 classid 1:13 htb rate 1mbit ceil 20mbit
 tc class add dev eth0 parent 1:1 classid 1:14 htb rate 1mbit ceil 20mbit
 
 
-tc filter add dev eth0 parent 1:0 protocol ip prio 1 u32 match ip dst 88.88.1.0/24 flowid 1:11
-tc filter add dev eth0 parent 1:0 protocol ip prio 2 u32 match ip dst 88.88.2.0/24 match ip protocol 17 0xff flowid 1:12
-tc filter add dev eth0 parent 1:0 protocol ip prio 1 u32 match ip dst 88.88.2.0/24 flowid 1:12
-tc filter add dev eth0 parent 1:0 protocol ip prio 1 u32 match ip dst 88.88.3.0/24 flowid 1:13
-tc filter add dev eth0 parent 1:0 protocol ip prio 1 u32 match ip dst 88.88.4.0/24 flowid 1:14
+tc filter add dev eth0 parent 1:0 protocol ip u32 match ip dst 88.88.1.0/24 flowid 1:11
+tc filter add dev eth0 parent 1:0 protocol ip prio 1 u32 match ip dst 88.88.2.0/24 match ip protocol 17 0xff flowid 1:12
+tc filter add dev eth0 parent 1:0 protocol ip prio 2 u32 match ip dst 88.88.2.0/24 flowid 1:12
+tc filter add dev eth0 parent 1:0 protocol ip u32 match ip dst 88.88.3.0/24 flowid 1:13
+tc filter add dev eth0 parent 1:0 protocol ip u32 match ip dst 88.88.4.0/24 flowid 1:14
 
 service ssh start
 
